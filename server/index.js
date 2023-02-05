@@ -10,19 +10,19 @@ server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 
 server.post("/candidate", verifyData, async (req, res) => {
-  res.send(await queries.searchByCandidate(db, req.body.keyword));
+  res.send(await queries.searchByCandidate(db, req.body.searchWord));
 });
 
 server.post("/role", verifyData, async (req, res) => {
-  res.send(await queries.searchByRole(db, req.body.keyword));
+  res.send(await queries.searchByRole(db, req.body.searchWord));
 });
 
 server.post("/city", verifyData, async (req, res) => {
-  res.send(await queries.searchByCity(db, req.body.keyword));
+  res.send(await queries.searchByCity(db, req.body.searchWord));
 });
 
 server.post("/general", verifyData, async (req, res) => {
-  res.send(await queries.searchByAll(db, req.body.keyword));
+  res.send(await queries.searchByAll(db, req.body.searchWord));
 });
 
 server.get("/list/:type", async (req, res) => {

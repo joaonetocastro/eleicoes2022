@@ -1,6 +1,6 @@
 function verifyData (request, response, next) {
-  if (!request.body || request.body.keyword === undefined) {
-    return response.send({ error: "param 'keyword' is missing" });
+  if (!request.body || request.body.searchWord === undefined) {
+    return response.send({ error: "param 'searchWord' is missing" });
   }
 
   next();
