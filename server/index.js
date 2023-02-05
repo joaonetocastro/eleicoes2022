@@ -36,7 +36,7 @@ server.get("/list/:type", async (req, res) => {
 });
 
 server.get("*", (req, res) => {
-  res.send({ error: "router not found" });
+  res.send({ error: "route not found" });
 });
 
 server.listen(8080, () => console.log("Server listening at localhost:8080"));
