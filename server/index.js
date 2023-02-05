@@ -23,7 +23,6 @@ const server = http.createServer(async (req, res) => {
 
     case '/role':
       jsonResponse(res, await queries.searchByRole(db, query.keyword));
-      jsonResponse(res, data);
       break;
 
     case '/city':
