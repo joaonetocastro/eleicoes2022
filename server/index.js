@@ -1,34 +1,44 @@
-const http = require('http');
+const http = require("http");
 const url = require("url");
+const sqlite = require("sqlite3");
+const queries = require("./queries");
+const db = new sqlite.Database('./database/eleicoes2022-pi.db');
 
-const server = http.createServer((req, res) => {
+function jsonResponse(response, data) {
+  response.writeHead(200);
+  response.end(JSON.stringify(data, null, 3));
+  return response;
+}
+
+const server = http.createServer(async (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
-  const reqUrl = url.parse(req.url).pathname;
+  const parsed = url.parse(req.url, true);
+  const reqUrl = parsed.pathname;
+  const query = parsed.query;
 
   switch (reqUrl) {
     case '/candidate':
-      res.write("/candidate");
-      res.end();
+      jsonResponse(res, await queries.searchByCandidate(db, query.keyword));
       break;
 
     case '/role':
-      res.write("/role");
-      res.end();
+      jsonResponse(res, await queries.searchByRole(db, query.keyword));
+      jsonResponse(res, data);
       break;
 
     case '/city':
-      res.write("/city");
-      res.end();
+      res.writeHead(200);
+      jsonResponse(res, await queries.searchByCity(db, query.keyword));
       break;
 
     case '/general':
-      res.write("/general");
-      res.end();
+      res.writeHead(200);
+      jsonResponse(res, await queries.searchByAll(db, query.keyword));
       break;
 
     default:
-      res.write("/");
-      res.end();
+      res.writeHead(200);
+      res.end(JSON.stringify({ error: "route not found" }, null));
       break;
   }
 });
