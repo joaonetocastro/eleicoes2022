@@ -1,5 +1,5 @@
 async function searchByCandidate(dbConnection, keyword) {
-  const sql = `SELECT * FROM votos_cand_estado where cand_nome LIKE '${keyword}%'`;
+  const sql = `SELECT * FROM votos_cand_estado WHERE cand_nome LIKE '${keyword.toUpperCase()}%'`;
 
   return new Promise(function (resolve, reject) {
     let response = [];
@@ -22,7 +22,7 @@ async function searchByCandidate(dbConnection, keyword) {
 }
 
 async function searchByRole(dbConnection, keyword) {
-  const sql = `SELECT * FROM votos_cand_estado where cargo_nome LIKE '${keyword}%'`;
+  const sql = `SELECT * FROM votos_cand_estado WHERE cargo_nome LIKE '${keyword.toUpperCase()}%'`;
 
   return new Promise(function (resolve, reject) {
     let response = [];
@@ -45,7 +45,7 @@ async function searchByRole(dbConnection, keyword) {
 }
 
 async function searchByCity(dbConnection, keyword) {
-  const sql = `SELECT * FROM votos_cand_municipio where cargo_nome LIKE '${keyword}%'`;
+  const sql = `SELECT * FROM votos_cand_municipio WHERE cargo_nome LIKE '${keyword.toUpperCase()}%'`;
 
   return new Promise(function (resolve, reject) {
     let response = [];
@@ -68,7 +68,7 @@ async function searchByCity(dbConnection, keyword) {
 }
 
 async function searchByAll(dbConnection, keyword) {
-  const sql = `SELECT * FROM votos_cand_estado where cand_status = ${keyword}`;
+  const sql = `SELECT * FROM votos_cand_estado WHERE cand_status = ${keyword.toUpperCase()}`;
 
   return new Promise(function (resolve, reject) {
     let response = [];
@@ -90,9 +90,30 @@ async function searchByAll(dbConnection, keyword) {
   });
 }
 
+async function getAllData(dbConnection, type) {
+  const sql = `SELECT * FROM ${type.toUpperCase()} ORDER BY nome`;
+
+  return new Promise(function (resolve, reject) {
+    let response = [];
+    dbConnection.all(sql, async (err, rows) => {
+      if (err) {
+        reject(err.response);
+      }
+
+      response = await rows.map((row) => {
+        return {
+          name: row.nome,
+        }
+      });
+      resolve(response);
+    });
+  });
+}
+
 module.exports = {
   searchByCandidate,
   searchByRole,
   searchByCity,
   searchByAll,
+  getAllData,
 }
