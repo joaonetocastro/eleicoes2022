@@ -2,7 +2,7 @@ const db = require('../db');
 
 const getRoles = (req, res) => {
   return new Promise(function () {
-    const sql = `SELECT * FROM candidato ORDER BY nome`;
+    const sql = `SELECT * FROM cargo ORDER BY nome`;
     db.all(sql, async (err, rows) => {
       if (err) {
         res.status(500).send({ message: err.message });
@@ -27,7 +27,7 @@ const searchRoles = (req, res) => {
   }
 
   return new Promise(function () {
-    const query = `SELECT * FROM votos_cand_estado WHERE cand_nome LIKE '${req.body.search.toUpperCase()}%'`;
+    const query = `SELECT * FROM votos_cand_estado WHERE cargo_nome LIKE '${req.body.search.toUpperCase()}'`;
     db.all(query, async (err, rows) => {
       if (err) {
         res.status(500).send({ message: err.message });

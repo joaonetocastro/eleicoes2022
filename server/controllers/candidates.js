@@ -27,7 +27,7 @@ const searchCandidates = (req, res) => {
   }
 
   return new Promise(function () {
-    const query = `SELECT * FROM votos_cand_estado WHERE cand_nome LIKE '${req.body.search.toUpperCase()}%'`;
+    const query = `SELECT * FROM votos_cand_estado WHERE cand_nome LIKE '${req.body.search.toUpperCase()}'`;
     db.all(query, async (err, rows) => {
       if (err) {
         res.status(500).send({ message: err.message });
