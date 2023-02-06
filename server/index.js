@@ -1,21 +1,17 @@
 const express = require('express');
-const { getCandidates, searchCandidates } = require('./controllers/candidates');
-const { getCities, searchCities } = require('./controllers/cities');
-const { getRoles, searchRoles } = require('./controllers/roles');
-const verifyData = require('./middlewares/verifyData');
+const { getByCandidates } = require('./controllers/candidates');
+const { getByCities, getCitiesList } = require('./controllers/cities');
+const { getByRoles, getRolesList } = require('./controllers/roles');
 
 const server = express();
 
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 
-server.get('/candidates', getCandidates);
-server.post('/candidates', searchCandidates, verifyData);
-
-server.get('/cities', getCities);
-server.post('/cities', searchCities, verifyData);
-
-server.get('/roles', getRoles);
-server.post('/roles', searchRoles, verifyData);
+server.get('/candidates', getByCandidates);
+server.get('/cities', getByCities);
+server.get('/roles', getByRoles);
+server.get('/list/cities', getCitiesList);
+server.get('/list/roles', getRolesList);
 
 server.listen(8080, () => console.log("Server listening at localhost:8080"));

@@ -1,54 +1,38 @@
 const db = require('../db');
 
-const getRoles = (req, res) => {
+const getRolesList = (req, res) => {
   return new Promise(function () {
-    const sql = `SELECT * FROM cargo ORDER BY nome`;
-    db.all(sql, async (err, rows) => {
-      if (err) {
-        res.status(500).send({ message: err.message });
-        return;
-      }
+    const query = `SELECT * FROM cargo ORDER BY nome`;
 
-      const data = rows.map((row) => {
-        return {
-          name: row.nome,
-        }
-      });
-
-      res.send(data);
-    });
-  });
-}
-
-const searchRoles = (req, res) => {
-  if (!req.body.search) {
-    res.send({ message: "param 'search' is missing" });
-    return;
-  }
-
-  return new Promise(function () {
-    const query = `SELECT * FROM votos_cand_estado WHERE cargo_nome LIKE '${req.body.search.toUpperCase()}'`;
     db.all(query, async (err, rows) => {
       if (err) {
         res.status(500).send({ message: err.message });
         return;
       }
 
-      const data = rows.map((cand) => {
-        return {
-          name: cand.cand_nome,
-          role: cand.cargo_nome,
-          votes: cand.cand_votos,
-          status: cand.cand_status == 1 ? "elected" : "not elected",
-        }
-      });
+      res.send(rows);
+    });
+  });
+}
 
-      res.send(data);
+const getByRoles = (req, res) => {
+  return new Promise(function () {
+    const { search } = req.query;
+    const queryRole = `cargo_nome LIKE '${!!search ? search.toUpperCase() : '%%'}'`;
+    const query = `SELECT * FROM votos_cand_estado WHERE ${queryRole} ORDER BY cand_nome`;
+
+    db.all(query, async (err, rows) => {
+      if (err) {
+        res.status(500).send({ message: err.message });
+        return;
+      }
+
+      res.send(rows);
     });
   });
 }
 
 module.exports = {
-  getRoles,
-  searchRoles,
+  getRolesList,
+  getByRoles,
 }

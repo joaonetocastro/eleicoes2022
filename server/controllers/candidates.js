@@ -1,54 +1,23 @@
 const db = require('../db');
 
-const getCandidates = (req, res) => {
+const getByCandidates = (req, res) => {
   return new Promise(function () {
-    const sql = `SELECT * FROM candidato ORDER BY nome`;
-    db.all(sql, async (err, rows) => {
-      if (err) {
-        res.status(500).send({ message: err.message });
-        return;
-      }
+    const { search, status } = req.query;
+    const queryStatus = `cand_status = ${!!status ? status : 0}`;
+    const queryName = `cand_nome LIKE '${!!search ? search.toUpperCase() : '%%'}'`;
+    const query = `SELECT * FROM votos_cand_estado WHERE ${queryStatus} AND ${queryName} ORDER BY cand_nome`;
 
-      const data = rows.map((row) => {
-        return {
-          name: row.nome,
-        }
-      });
-
-      res.send(data);
-    });
-  });
-}
-
-const searchCandidates = (req, res) => {
-  if (!req.body.search) {
-    res.send({ message: "param 'search' is missing" });
-    return;
-  }
-
-  return new Promise(function () {
-    const query = `SELECT * FROM votos_cand_estado WHERE cand_nome LIKE '${req.body.search.toUpperCase()}'`;
     db.all(query, async (err, rows) => {
       if (err) {
         res.status(500).send({ message: err.message });
         return;
       }
 
-      const data = rows.map((cand) => {
-        return {
-          name: cand.cand_nome,
-          role: cand.cargo_nome,
-          votes: cand.cand_votos,
-          status: cand.cand_status == 1 ? "elected" : "not elected",
-        }
-      });
-
-      res.send(data);
+      res.send(rows);
     });
   });
 }
 
 module.exports = {
-  getCandidates,
-  searchCandidates,
+  getByCandidates,
 }
