@@ -45,7 +45,7 @@ async function searchByRole(dbConnection, keyword) {
 }
 
 async function searchByCity(dbConnection, keyword) {
-  const sql = `SELECT * FROM votos_cand_municipio WHERE cargo_nome LIKE '${keyword.toUpperCase()}%'`;
+  const sql = `SELECT * FROM votos_cand_municipio WHERE muni_nome LIKE '${keyword.toUpperCase()}%'`;
 
   return new Promise(function (resolve, reject) {
     let response = [];
