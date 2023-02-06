@@ -1,8 +1,8 @@
 const db = require('../db');
 
-const getCargos = (req, res) => {
+const getCities = (req, res) => {
   return new Promise(function () {
-    const sql = `SELECT * FROM candidato ORDER BY nome`;
+    const sql = `SELECT * FROM municipio ORDER BY nome`;
     db.all(sql, async (err, rows) => {
       if (err) {
         res.status(500).send({ message: err.message });
@@ -20,14 +20,14 @@ const getCargos = (req, res) => {
   });
 }
 
-const searchCargos = (req, res) => {
+const searchCities = (req, res) => {
   if (!req.body.search) {
     res.send({ message: "param 'search' is missing" });
     return;
   }
 
   return new Promise(function () {
-    const query = `SELECT * FROM votos_cand_estado WHERE cand_nome LIKE '${req.body.search.toUpperCase()}%'`;
+    const query = `SELECT * FROM votos_cand_municipio WHERE muni_nome LIKE '${req.body.search.toUpperCase()}%'`;
     db.all(query, async (err, rows) => {
       if (err) {
         res.status(500).send({ message: err.message });
@@ -49,6 +49,6 @@ const searchCargos = (req, res) => {
 }
 
 module.exports = {
-  getCargos,
-  searchCargos,
+  getCities,
+  searchCities,
 }

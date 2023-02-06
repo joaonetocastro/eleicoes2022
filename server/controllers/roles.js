@@ -1,6 +1,6 @@
 const db = require('../db');
 
-const getCandidatos = (req, res) => {
+const getRoles = (req, res) => {
   return new Promise(function () {
     const sql = `SELECT * FROM candidato ORDER BY nome`;
     db.all(sql, async (err, rows) => {
@@ -20,7 +20,7 @@ const getCandidatos = (req, res) => {
   });
 }
 
-const searchCandidatos = (req, res) => {
+const searchRoles = (req, res) => {
   if (!req.body.search) {
     res.send({ message: "param 'search' is missing" });
     return;
@@ -49,6 +49,6 @@ const searchCandidatos = (req, res) => {
 }
 
 module.exports = {
-  getCandidatos,
-  searchCandidatos,
+  getRoles,
+  searchRoles,
 }

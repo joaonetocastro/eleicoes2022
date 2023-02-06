@@ -1,8 +1,8 @@
 const db = require('../db');
 
-const getMunicipios = (req, res) => {
+const getCandidates = (req, res) => {
   return new Promise(function () {
-    const sql = `SELECT * FROM municipio ORDER BY nome`;
+    const sql = `SELECT * FROM candidato ORDER BY nome`;
     db.all(sql, async (err, rows) => {
       if (err) {
         res.status(500).send({ message: err.message });
@@ -20,14 +20,14 @@ const getMunicipios = (req, res) => {
   });
 }
 
-const searchMunicipios = (req, res) => {
+const searchCandidates = (req, res) => {
   if (!req.body.search) {
     res.send({ message: "param 'search' is missing" });
     return;
   }
 
   return new Promise(function () {
-    const query = `SELECT * FROM votos_cand_municipio WHERE muni_nome LIKE '${req.body.search.toUpperCase()}%'`;
+    const query = `SELECT * FROM votos_cand_estado WHERE cand_nome LIKE '${req.body.search.toUpperCase()}%'`;
     db.all(query, async (err, rows) => {
       if (err) {
         res.status(500).send({ message: err.message });
@@ -49,6 +49,6 @@ const searchMunicipios = (req, res) => {
 }
 
 module.exports = {
-  getMunicipios,
-  searchMunicipios,
+  getCandidates,
+  searchCandidates,
 }
