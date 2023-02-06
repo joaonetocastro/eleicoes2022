@@ -2,6 +2,7 @@ const express = require('express');
 const sqlite = require('sqlite3');
 const queries = require('./queries');
 const verifyData = require('./middlewares/verifyData');
+const { getCandidatos } = require('./controllers/candidatos');
 
 const db = new sqlite.Database('./database/eleicoes2022-pi.db');
 const server = express();
@@ -34,5 +35,7 @@ server.get("/list/:type", async (req, res) => {
   }
   res.send(await queries.getAllData(db, type));
 });
+
+server.get('/candidatos', getCandidatos)
 
 server.listen(8080, () => console.log("Server listening at localhost:8080"));
