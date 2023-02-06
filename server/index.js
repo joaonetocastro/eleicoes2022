@@ -35,8 +35,4 @@ server.get("/list/:type", async (req, res) => {
   res.send(await queries.getAllData(db, type));
 });
 
-server.get("*", (req, res) => {
-  res.send({ error: "route not found" });
-});
-
 server.listen(8080, () => console.log("Server listening at localhost:8080"));
