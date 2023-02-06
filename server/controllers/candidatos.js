@@ -2,7 +2,7 @@ const {db} = require('../db')
 
 const getCandidatos = (req, res) => {
   let where = 'WHERE'
-  console.log(req.query)
+
   if(req.query.cargo) {
     where += ` c.cargo = ${req.query.cargo}`
   }
