@@ -1,8 +1,8 @@
 const {db} = require('../db')
 
-const getCargos = (req, res) => {
+const getMunicipios = (req, res) => {
   const query = `
-    SELECT * from cargo
+    SELECT * from municipio
   `;
 
 
@@ -18,5 +18,5 @@ const getCargos = (req, res) => {
 }
 
 module.exports = {
-  getCargos
+  getMunicipios
 }
