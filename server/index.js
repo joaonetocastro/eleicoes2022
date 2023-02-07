@@ -8,10 +8,10 @@ server.use(express.static('../client'))
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 
-server.get('/candidates', getByCandidates);
-server.get('/cities', getByCities);
-server.get('/roles', getByRoles);
-server.get('/list/cities', getCitiesList);
-server.get('/list/roles', getRolesList);
+server.get('/api/candidates', getByCandidates);
+server.get('/api/cities', getByCities);
+server.get('/api/roles', getByRoles);
+server.get('/api/list/cities', getCitiesList);
+server.get('/api/list/roles', getRolesList);
 
 server.listen(8080, () => console.log("Server listening at localhost:8080"));
