@@ -1,22 +1,27 @@
-function getCandidates(onSuccess, onError) {
-  const xhr = new XMLHttpRequest();
-  const url = "/api/candidates";
+function makeEndpointFetcher(props){
+  function endpointFetcher(onSuccess, onError) {
+    const xhr = new XMLHttpRequest();
+  
+    xhr.addEventListener('loadend', function() {
+      const responseBody = JSON.parse(this.responseText);
+      if(this.status !== 200) {
+        onError(responseBody)
+        return
+      }
+      onSuccess(responseBody)
+    })
+  
+    xhr.open(props.method || 'GET', props.url, true);
+    xhr.send();
+  }
 
-  xhr.addEventListener('loadend', function() {
-    const responseBody = JSON.parse(this.responseText);
-    if(this.status !== 200) {
-      onError(responseBody)
-      return
-    }
-    onSuccess(responseBody)
-  })
+  return endpointFetcher
+} 
 
-  xhr.open("GET", url, true);
-  xhr.send();
-}
+
 
 const api = {
-  getCandidates
+  getCandidates: makeEndpointFetcher({ url: '/api/candidates'})
 }
 
 
