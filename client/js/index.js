@@ -16,12 +16,12 @@ function makeEndpointFetcher(props){
   }
 
   return endpointFetcher
-} 
-
-
+}
 
 const api = {
-  getCandidates: makeEndpointFetcher({ url: '/api/candidates'})
+  getCandidates: makeEndpointFetcher({ url: '/api/candidates'}),
+  getRoles: makeEndpointFetcher({url: '/api/list/roles'}),
+  getCities: makeEndpointFetcher({url: '/api/list/cities'}),
 }
 
 
@@ -29,4 +29,4 @@ window.addEventListener("load", (event) => {
   console.log("Carregou!");
 });
 
-api.getCandidates(console.log, console.error)
+api.getCities(console.log, console.error)
