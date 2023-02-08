@@ -1,7 +1,9 @@
 function makeEndpointFetcher(props){
-  function endpointFetcher(onSuccess, onError) {
+  function endpointFetcher(onSuccess, onError, settings = {}) {
     const xhr = new XMLHttpRequest();
-  
+    const searchParams = new URLSearchParams(settings.query || {})
+    const url = `${props.url}?${searchParams.toString()}`
+
     xhr.addEventListener('loadend', function() {
       const responseBody = JSON.parse(this.responseText);
       if(this.status !== 200) {
@@ -11,7 +13,7 @@ function makeEndpointFetcher(props){
       onSuccess(responseBody)
     })
   
-    xhr.open(props.method || 'GET', props.url, true);
+    xhr.open(props.method || 'GET', url, true);
     xhr.send();
   }
 
@@ -31,4 +33,4 @@ window.addEventListener("load", (event) => {
   console.log("Carregou!");
 });
 
-api.getCandidatesByRole(console.log, console.error)
+api.getCandidatesByRole(console.log, console.error, {query: {search: 'presidente'}})
