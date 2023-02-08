@@ -45,7 +45,7 @@ function renderCandidates(candidates) {
   const container = document.querySelector('#candidate-container')
   container.replaceChildren()
   for(const candidate of candidates) {
-    const element = document.createElement('div')
+    const element = document.createElement('label')
     element.innerHTML = `
       <input type="checkbox" name="selected_candidates" value="${candidate.cand_id}" data-name="${candidate.cand_nome}">${candidate.cand_nome}</input>
     `
