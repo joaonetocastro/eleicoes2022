@@ -49,7 +49,7 @@ function renderCandidates(candidates) {
     element.innerHTML = `
       <input type="checkbox" name="selected_candidates" value="${candidate.cand_id}" data-name="${candidate.cand_nome}">${candidate.cand_nome}</input>
     `
-    
+
     container.append(element)
   }
 }
