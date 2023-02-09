@@ -28,24 +28,17 @@ var api = {
   getCities: makeEndpointFetcher({url: '/api/list/cities'}),
 }
 
-function getSelectedCandidates(){
-  const checked = document.querySelectorAll('[name=selected_candidates]:checked')
-  const candidates = []
-  for(const element of checked) {
-    candidates.push(({id: element.value, name: element.dataset.name}))
-  }
-  return candidates
+function getSelectedCandidate() {
+  return document.querySelector('#select-candidate').value
 }
 
-var applicationState = {
-  getSelectedCandidates
+function getSelectedRole() {
+  return document.querySelector('#select-role').value
 }
 
 function renderResult(candidates) {
-  const selectedCandidate = document.querySelector('#select-candidate').value
-
   const container = document.querySelector('#candidate-container')
-  container.replaceChildren()
+  const selectedCandidate = getSelectedCandidate()
   for(const candidate of candidates) {
     if(selectedCandidate && candidate.cand_id != selectedCandidate) continue
     const element = document.createElement('div')
@@ -75,15 +68,39 @@ function renderCandidateOptions(candidates) {
   }
 }
 
+function renderRoleOptions(roles) {
+  const container = document.querySelector('#select-role')
+
+  for(const role of roles) {
+    const element = document.createElement('option')
+    element.value = role.nome
+    element.innerHTML = `${role.nome}`
+
+    container.append(element)
+  }
+}
+
 function loadAndRenderResult() {
-  api.getCandidates(renderResult)
+  document.querySelector('#candidate-container').replaceChildren()
+  if(getSelectedCandidate()){
+    api.getCandidates(renderResult)
+    return
+  }else if (getSelectedRole()) {
+    api.getCandidatesByRole(renderResult, console.error, {
+      query: {
+        search: getSelectedRole()
+      }
+    })
+  }
 }
 
 window.addEventListener("load", (event) => {
   api.getCandidates(renderCandidateOptions)
+  api.getRoles(renderRoleOptions)
   loadAndRenderResult()
 
   document.querySelector('#select-candidate').addEventListener('change', loadAndRenderResult)
+  document.querySelector('#select-role').addEventListener('change', loadAndRenderResult)
 });
 
 
