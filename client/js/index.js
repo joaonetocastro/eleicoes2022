@@ -42,9 +42,12 @@ var applicationState = {
 }
 
 function renderResult(candidates) {
+  const selectedCandidate = document.querySelector('#select-candidate').value
+
   const container = document.querySelector('#candidate-container')
   container.replaceChildren()
   for(const candidate of candidates) {
+    if(selectedCandidate && candidate.cand_id != selectedCandidate) continue
     const element = document.createElement('div')
     element.classList.add('col-md-3')
     element.innerHTML = `
