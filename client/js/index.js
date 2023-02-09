@@ -41,16 +41,19 @@ var applicationState = {
   getSelectedCandidates
 }
 
-function renderCandidates(candidates) {
+function renderResult(candidates) {
   const container = document.querySelector('#candidate-container')
   container.replaceChildren()
   for(const candidate of candidates) {
     const element = document.createElement('div')
     element.classList.add('col-md-3')
     element.innerHTML = `
-    <label>
-      <input type="checkbox" class="mr-2" name="selected_candidates" value="${candidate.cand_id}" data-name="${candidate.cand_nome}">${candidate.cand_nome}</input>
-    </label>
+    <div class="result-card">
+      <h1>${candidate.cand_nome}</h1>
+      <span>Cargo: ${candidate.cargo_nome}</span>
+      <span>Votos: ${candidate.cand_votos}</span>
+      <span>Status: ${candidate.cand_status}</span>
+    </div>
     `
 
     container.append(element)
@@ -95,4 +98,5 @@ function renderCandidateOptions(candidates) {
 
 window.addEventListener("load", (event) => {
   api.getCandidates(renderCandidateOptions)
+  api.getCandidates(renderResult)
 });
