@@ -28,9 +28,11 @@ const getByCities = (req, res) => {
       }
 
       const data = rows.map((row) => {
+        // os campos estão trocados - cand_status, cargo_nome
         return {
           ...row,
-          cand_status: row.cand_status === 1 ? 'eleito' : 'não eleito',
+          cargo_nome: row.cand_status,
+          cand_status: row.cargo_nome === 1 ? 'eleito' : 'não eleito',
         }
       });
 
