@@ -77,7 +77,7 @@ function renderResult(candidates) {
     <div class="card" style="width: 18rem;">
       <div class="card-body">
         <h5 class="card-title">${candidate.cand_nome}</h5>
-        <span>Cargo: ${candidate.cargo_nome}</span>
+        <h6 class="card-subtitle mb-2 text-muted">Cargo: ${candidate.cargo_nome}</h6>
         <span>Votos: ${candidate.cand_votos}</span>
         <span>Status: ${candidate.cand_status}</span>
       </div>
