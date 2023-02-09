@@ -74,7 +74,7 @@ function renderResult(candidates) {
     const element = document.createElement('div')
     element.classList.add('col-md-3')
     element.innerHTML = `
-    <div class="card" style="width: 18rem;">
+    <div class="card" style="height: 15rem; margin-bottom: 1rem;">
       <div class="card-body">
         <h5 class="card-title">${candidate.cand_nome}</h5>
         <h6 class="card-subtitle mb-2 text-muted">Cargo: ${candidate.cargo_nome}</h6>
