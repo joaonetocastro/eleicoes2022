@@ -76,7 +76,7 @@ function renderResult(candidates) {
     element.innerHTML = `
     <div class="card" style="width: 18rem;">
       <div class="card-body">
-        <h1>${candidate.cand_nome}</h1>
+        <h5 class="card-title">${candidate.cand_nome}</h5>
         <span>Cargo: ${candidate.cargo_nome}</span>
         <span>Votos: ${candidate.cand_votos}</span>
         <span>Status: ${candidate.cand_status}</span>
