@@ -29,11 +29,8 @@ const getByRoles = (req, res) => {
 
       const data = rows.map((row) => {
         return {
-          id: row.cand_id,
-          name: row.cand_nome,
-          role: row.cargo_nome,
-          status: row.cand_status === 1 ? 'elected' : 'not elected',
-          votes: row.cand_votos
+          ...row,
+          cand_status: row.cand_status === 1 ? 'elected' : 'not elected',
         }
       });
 
