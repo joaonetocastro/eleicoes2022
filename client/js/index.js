@@ -28,6 +28,10 @@ var api = {
   getCities: makeEndpointFetcher({url: '/api/list/cities'}),
 }
 
+function getSelectedGeneralStatus() {
+  return document.querySelector('[name=general-status]').value
+}
+
 function getSelectedCandidate() {
   return document.querySelector('#select-candidate').value
 }
@@ -50,6 +54,7 @@ function renderFilterOptions(){
   document.querySelector('#select-candidate-container').hidden = true
   document.querySelector('#select-role-container').hidden = true
   document.querySelector('#select-city-container').hidden = true
+  document.querySelector('[name=general-status]').hidden = true
 
   if (groupBy === 'candidate') {
     document.querySelector('#select-candidate-container').hidden = false
@@ -58,6 +63,7 @@ function renderFilterOptions(){
   }else if (groupBy === 'city') {
     document.querySelector('#select-city-container').hidden = false
   }else if (groupBy === 'general'){
+    document.querySelector('[name=general-status]').hidden = false
     loadAndRenderResult()
   }
 }
@@ -117,9 +123,10 @@ function renderCityOptions(cities) {
 }
 
 function loadAndRenderResult() {
-  const groupBy = getResultBy()
-  console.log("🚀 ~ file: index.js:119 ~ loadAndRenderResult ~ groupBy", groupBy)
   document.querySelector('#candidate-container').replaceChildren()
+
+  const groupBy = getResultBy()
+  
   if(groupBy === 'candidate'){
     const selected = getSelectedCandidate()
     if(!selected) return
@@ -141,7 +148,10 @@ function loadAndRenderResult() {
       }
     })
   } else if (groupBy === 'general') {
-    api.getCandidates(renderResult)
+    const status = getSelectedGeneralStatus()
+    const settings = {}
+    if(settings) settings.query = {status}
+    api.getCandidates(renderResult, settings)
   }
 }
 
@@ -156,6 +166,7 @@ window.addEventListener("load", (event) => {
   document.querySelector('#select-candidate').addEventListener('change', loadAndRenderResult)
   document.querySelector('#select-role').addEventListener('change', loadAndRenderResult)
   document.querySelector('#select-city').addEventListener('change', loadAndRenderResult)
+  document.querySelector('[name=general-status]').addEventListener('change', loadAndRenderResult)
 
   Array.from(document.querySelectorAll('[name=search_result_by]')).map(element => element.addEventListener('change', renderFilterOptions))
 });
