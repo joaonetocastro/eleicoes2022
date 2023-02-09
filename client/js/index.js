@@ -36,6 +36,10 @@ function getSelectedRole() {
   return document.querySelector('#select-role').value
 }
 
+function getResultBy(){
+  return document.querySelector('[name=search_result_by]:checked').value
+}
+
 function renderResult(candidates) {
   const container = document.querySelector('#candidate-container')
   const selectedCandidate = getSelectedCandidate()
