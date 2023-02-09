@@ -57,6 +57,18 @@ function renderCandidates(candidates) {
   }
 }
 
+function renderCandidateOptions(candidates) {
+  const container = document.querySelector('#select-candidate')
+  container.replaceChildren()
+  for(const candidate of candidates) {
+    const element = document.createElement('option')
+    element.value = candidate.cand_id
+    element.innerHTML = `${candidate.cand_nome}`
+
+    container.append(element)
+  }
+}
+
 // TODO:
 // 1. O sistema deverá permitir que sejam consultados os resultados das seguintes formas:
 
@@ -82,5 +94,5 @@ function renderCandidates(candidates) {
 
 
 window.addEventListener("load", (event) => {
-  api.getCandidates(renderCandidates)
+  api.getCandidates(renderCandidateOptions)
 });
