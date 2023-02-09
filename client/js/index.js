@@ -1,5 +1,5 @@
 function makeEndpointFetcher(props){
-  function endpointFetcher(onSuccess, onError, settings = {}) {
+  function endpointFetcher(onSuccess, settings = {}, onError) {
     const xhr = new XMLHttpRequest();
     const searchParams = new URLSearchParams(settings.query || {})
     const url = `${props.url}?${searchParams.toString()}`
@@ -40,11 +40,22 @@ function getResultBy(){
   return document.querySelector('[name=search_result_by]:checked').value
 }
 
+function renderFilterOptions(){
+  const groupBy = getResultBy()
+
+  document.querySelector('#select-candidate-container').hidden = true
+  document.querySelector('#select-role-container').hidden = true
+
+  if (groupBy === 'candidate') {
+    document.querySelector('#select-candidate-container').hidden = false
+  }else if (groupBy === 'role') {
+    document.querySelector('#select-role-container').hidden = false
+  }
+}
+
 function renderResult(candidates) {
   const container = document.querySelector('#candidate-container')
-  const selectedCandidate = getSelectedCandidate()
   for(const candidate of candidates) {
-    if(selectedCandidate && candidate.cand_id != selectedCandidate) continue
     const element = document.createElement('div')
     element.classList.add('col-md-3')
     element.innerHTML = `
@@ -65,7 +76,7 @@ function renderCandidateOptions(candidates) {
 
   for(const candidate of candidates) {
     const element = document.createElement('option')
-    element.value = candidate.cand_id
+    element.value = candidate.cand_nome
     element.innerHTML = `${candidate.cand_nome}`
 
     container.append(element)
@@ -85,12 +96,19 @@ function renderRoleOptions(roles) {
 }
 
 function loadAndRenderResult() {
+  const groupBy = getResultBy()
   document.querySelector('#candidate-container').replaceChildren()
-  if(getSelectedCandidate()){
-    api.getCandidates(renderResult)
+  if(groupBy === 'candidate'){
+    const selected = getSelectedCandidate()
+    if(!selected) return
+    api.getCandidates(renderResult, {
+      query: {
+        search: selected
+      }
+    })
     return
-  }else if (getSelectedRole()) {
-    api.getCandidatesByRole(renderResult, console.error, {
+  }else if (groupBy === 'role') {
+    api.getCandidatesByRole(renderResult, {
       query: {
         search: getSelectedRole()
       }
@@ -102,9 +120,11 @@ window.addEventListener("load", (event) => {
   api.getCandidates(renderCandidateOptions)
   api.getRoles(renderRoleOptions)
   loadAndRenderResult()
+  renderFilterOptions()
 
   document.querySelector('#select-candidate').addEventListener('change', loadAndRenderResult)
   document.querySelector('#select-role').addEventListener('change', loadAndRenderResult)
+  Array.from(document.querySelectorAll('[name=search_result_by]')).map(element => element.addEventListener('change', renderFilterOptions))
 });
 
 
