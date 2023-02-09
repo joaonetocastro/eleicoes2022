@@ -16,7 +16,7 @@ const getByCandidates = (req, res) => {
       const data = rows.map((row) => {
         return {
           ...row,
-          cand_status: row.cand_status === 1 ? 'elected' : 'not elected',
+          cand_status: row.cand_status === 1 ? 'eleito' : 'não eleito',
         }
       });
 
