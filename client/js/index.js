@@ -57,6 +57,8 @@ function renderFilterOptions(){
     document.querySelector('#select-role-container').hidden = false
   }else if (groupBy === 'city') {
     document.querySelector('#select-city-container').hidden = false
+  }else if (groupBy === 'general'){
+    loadAndRenderResult()
   }
 }
 
@@ -116,6 +118,7 @@ function renderCityOptions(cities) {
 
 function loadAndRenderResult() {
   const groupBy = getResultBy()
+  console.log("🚀 ~ file: index.js:119 ~ loadAndRenderResult ~ groupBy", groupBy)
   document.querySelector('#candidate-container').replaceChildren()
   if(groupBy === 'candidate'){
     const selected = getSelectedCandidate()
@@ -125,7 +128,6 @@ function loadAndRenderResult() {
         search: selected
       }
     })
-    return
   } else if (groupBy === 'role') {
     api.getCandidatesByRole(renderResult, {
       query: {
@@ -138,6 +140,8 @@ function loadAndRenderResult() {
         search: getSelectedCity()
       }
     })
+  } else if (groupBy === 'general') {
+    api.getCandidates(renderResult)
   }
 }
 
