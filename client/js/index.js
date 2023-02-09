@@ -65,7 +65,7 @@ function renderResult(candidates) {
 
 function renderCandidateOptions(candidates) {
   const container = document.querySelector('#select-candidate')
-  container.replaceChildren()
+
   for(const candidate of candidates) {
     const element = document.createElement('option')
     element.value = candidate.cand_id
@@ -98,8 +98,13 @@ function renderCandidateOptions(candidates) {
 // ∘Deve ser possível apresentar a votação global de todos os candidatos ou apenas dos candidatos eleitos.
 // ∘A alternância entre “eleitos” e “não eleitos” deve ser implementada utilizando-se a técnica AJAX.
 
+function loadAndRenderResult() {
+  api.getCandidates(renderResult)
+}
 
 window.addEventListener("load", (event) => {
   api.getCandidates(renderCandidateOptions)
-  api.getCandidates(renderResult)
+  loadAndRenderResult()
+
+  document.querySelector('#select-candidate').addEventListener('change', loadAndRenderResult)
 });
