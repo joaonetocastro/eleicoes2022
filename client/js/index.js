@@ -75,12 +75,26 @@ function renderCandidateOptions(candidates) {
   }
 }
 
+function loadAndRenderResult() {
+  api.getCandidates(renderResult)
+}
+
+window.addEventListener("load", (event) => {
+  api.getCandidates(renderCandidateOptions)
+  loadAndRenderResult()
+
+  document.querySelector('#select-candidate').addEventListener('change', loadAndRenderResult)
+});
+
+
+
+
 // TODO:
 // 1. O sistema deverá permitir que sejam consultados os resultados das seguintes formas:
 
 // 1.1. Por candidato
-// ∘Deve ser possível selecionar o candidato por seu nome a partir de uma caixa de edição e/ou uma lista.
-// ∘No resultado apresentado deve constar nome, cargo, votação e status (eleito ou não eleito).
+// OK ∘Deve ser possível selecionar o candidato por seu nome a partir de uma caixa de edição e/ou uma lista.
+// OK ∘No resultado apresentado deve constar nome, cargo, votação e status (eleito ou não eleito).
 
 // 1.2. Por cargo
 // ∘Ao se selecionar o cargo desejado a partir de uma lista, deve-se apresentar uma relação de todos os
@@ -97,14 +111,3 @@ function renderCandidateOptions(candidates) {
 // ∘Exibir o resultado geral da votação no Estado para todos os cargos eletivos.
 // ∘Deve ser possível apresentar a votação global de todos os candidatos ou apenas dos candidatos eleitos.
 // ∘A alternância entre “eleitos” e “não eleitos” deve ser implementada utilizando-se a técnica AJAX.
-
-function loadAndRenderResult() {
-  api.getCandidates(renderResult)
-}
-
-window.addEventListener("load", (event) => {
-  api.getCandidates(renderCandidateOptions)
-  loadAndRenderResult()
-
-  document.querySelector('#select-candidate').addEventListener('change', loadAndRenderResult)
-});
