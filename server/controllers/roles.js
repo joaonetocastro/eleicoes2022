@@ -27,7 +27,17 @@ const getByRoles = (req, res) => {
         return;
       }
 
-      res.send(rows);
+      const data = rows.map((row) => {
+        return {
+          id: row.cand_id,
+          name: row.cand_nome,
+          role: row.cargo_nome,
+          status: row.cand_status === 1 ? 'elected' : 'not elected',
+          votes: row.cand_votos
+        }
+      });
+
+      res.send(data);
     });
   });
 }
