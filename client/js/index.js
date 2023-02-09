@@ -36,6 +36,10 @@ function getSelectedRole() {
   return document.querySelector('#select-role').value
 }
 
+function getSelectedCity() {
+  return document.querySelector('#select-city').value
+}
+
 function getResultBy(){
   return document.querySelector('[name=search_result_by]:checked').value
 }
@@ -45,11 +49,14 @@ function renderFilterOptions(){
 
   document.querySelector('#select-candidate-container').hidden = true
   document.querySelector('#select-role-container').hidden = true
+  document.querySelector('#select-city-container').hidden = true
 
   if (groupBy === 'candidate') {
     document.querySelector('#select-candidate-container').hidden = false
   }else if (groupBy === 'role') {
     document.querySelector('#select-role-container').hidden = false
+  }else if (groupBy === 'city') {
+    document.querySelector('#select-city-container').hidden = false
   }
 }
 
@@ -95,6 +102,18 @@ function renderRoleOptions(roles) {
   }
 }
 
+function renderCityOptions(cities) {
+  const container = document.querySelector('#select-city')
+
+  for(const city of cities) {
+    const element = document.createElement('option')
+    element.value = city.nome
+    element.innerHTML = `${city.nome}`
+
+    container.append(element)
+  }
+}
+
 function loadAndRenderResult() {
   const groupBy = getResultBy()
   document.querySelector('#candidate-container').replaceChildren()
@@ -107,10 +126,16 @@ function loadAndRenderResult() {
       }
     })
     return
-  }else if (groupBy === 'role') {
+  } else if (groupBy === 'role') {
     api.getCandidatesByRole(renderResult, {
       query: {
         search: getSelectedRole()
+      }
+    })
+  } else if (groupBy === 'city') {
+    api.getCandidatesByCity(renderResult, {
+      query: {
+        search: getSelectedCity()
       }
     })
   }
@@ -119,11 +144,15 @@ function loadAndRenderResult() {
 window.addEventListener("load", (event) => {
   api.getCandidates(renderCandidateOptions)
   api.getRoles(renderRoleOptions)
+  api.getCities(renderCityOptions)
+
   loadAndRenderResult()
   renderFilterOptions()
 
   document.querySelector('#select-candidate').addEventListener('change', loadAndRenderResult)
   document.querySelector('#select-role').addEventListener('change', loadAndRenderResult)
+  document.querySelector('#select-city').addEventListener('change', loadAndRenderResult)
+
   Array.from(document.querySelectorAll('[name=search_result_by]')).map(element => element.addEventListener('change', renderFilterOptions))
 });
 
