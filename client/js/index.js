@@ -49,30 +49,37 @@ function getResultBy(){
 }
 
 function renderFilterOptions(){
+  document.querySelector('#candidate-container').innerHTML = '';
+
+  const selects = document.querySelectorAll('.form-select');
+  selects.forEach(select => select.selectedIndex = 0);
+
   const groupBy = getResultBy();
 
   document.querySelector('#select-candidate-container').hidden = true;
   document.querySelector('#select-role-container').hidden = true;
   document.querySelector('#select-city-container').hidden = true;
   document.querySelector('[name=general-status]').hidden = true;
+  document.querySelector('#votes-container').hidden = true;
 
   if (groupBy === 'candidate') {
     document.querySelector('#select-candidate-container').hidden = false;
-  }else if (groupBy === 'role') {
+  } else if (groupBy === 'role') {
     document.querySelector('#select-role-container').hidden = false;
-  }else if (groupBy === 'city') {
+  } else if (groupBy === 'city') {
     document.querySelector('#select-city-container').hidden = false;
-  }else if (groupBy === 'general'){
+    document.querySelector('#votes-container').hidden = false;
+  } else if (groupBy === 'general'){
     document.querySelector('[name=general-status]').hidden = false;
-    loadAndRenderResult()
+    loadAndRenderResult();
   }
 }
 
 function renderResult(result) {
-  const { data } = result;
+  const { data, totalVotes } = result;
   const container = document.querySelector('#candidate-container');
 
-  for(const candidate of data) {
+  for (const candidate of data) {
     const element = document.createElement('div');
     element.classList.add('col-md-3');
     element.innerHTML = `
@@ -85,6 +92,10 @@ function renderResult(result) {
       </div>
     </div>
     `;
+
+    if (!!totalVotes) {
+      document.querySelector("#votes-text").innerHTML = totalVotes;
+    }
 
     container.append(element);
   }
@@ -128,7 +139,6 @@ function renderCityOptions(cities) {
 }
 
 function loadAndRenderResult() {
-  document.querySelector('#candidate-container').replaceChildren();
   const groupBy = getResultBy();
   
   if (groupBy === 'candidate'){
@@ -138,19 +148,19 @@ function loadAndRenderResult() {
       query: {
         search: selected,
       }
-    })
+    });
   } else if (groupBy === 'role') {
     api.getCandidatesByRole(renderResult, {
       query: {
         search: getSelectedRole(),
       }
-    })
+    });
   } else if (groupBy === 'city') {
     api.getCandidatesByCity(renderResult, {
       query: {
         search: getSelectedCity(),
       }
-    })
+    });
   } else if (groupBy === 'general') {
     const status = getSelectedGeneralStatus();
     const settings = {};
