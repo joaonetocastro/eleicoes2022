@@ -75,11 +75,11 @@ function renderResult(candidates) {
     element.classList.add('col-md-3')
     element.innerHTML = `
     <div class="card" style="height: 15rem; margin-bottom: 1rem;">
-      <div class="card-body">
+      <div class="card-body shadow p-3 ">
         <h5 class="card-title">${candidate.cand_nome}</h5>
         <h6 class="card-subtitle mb-2 text-muted">Cargo: ${candidate.cargo_nome}</h6>
-        <p class="card-text"> Votos: ${candidate.cand_votos}</p>
-        <p class="card-text"> Status: ${candidate.cand_status}</p>
+        <p > Votos: ${candidate.cand_votos}</p>
+        <p > Status: ${candidate.cand_status}</p>
       </div>
     </div>
     `
