@@ -1,74 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Eleições 2022</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
   <link href="/css/styles.css" rel="stylesheet" />
 </head>
+
 <body>
-  <div id="content" class="container" >  
+  <div id="content" class="container">
     <h1 class="text-center p-5">Eleições 2022</h1>
     <h2 class="text-center">Buscar resultados por:</h2>
-    <div class="d-flex flex-row justify-content-center ">
-      <div class="form-check p-5">
+    <div class="d-flex flex-row justify-content-center">
+      <div class="form-check">
         <label class="form-check-label">
-        <input class="form-check-input" type="radio" value="candidate" name="search_result_by" checked>
+          <input class="form-check-input" type="radio" value="candidate" name="search_result_by" checked>
           Candidato
         </label>
       </div>
-      <div class="form-check p-5" >
+      <div class="form-check">
         <label class="form-check-label">
-        <input class="form-check-input" type="radio" value="role" name="search_result_by">
+          <input class="form-check-input" type="radio" value="role" name="search_result_by">
           Cargo
         </label>
       </div>
-      <div class="form-check p-5">
+      <div class="form-check">
         <label class="form-check-label">
-        <input class="form-check-input" type="radio" value="city" name="search_result_by">
+          <input class="form-check-input" type="radio" value="city" name="search_result_by">
           Município
         </label>
       </div>
-      <div class="form-check p-5">
+      <div class="form-check">
         <label class="form-check-label">
-        <input class="form-check-input" type="radio" value="general" name="search_result_by">
+          <input class="form-check-input" type="radio" value="general" name="search_result_by">
           Resultado geral
         </label>
+      </div>
     </div>
-    
-      <select name="general-status">
-        <option value="" checked>Selecione um status</option>
-        <option value="1">Eleito</option>
-        <option value="0">Não eleito</option>
+
+    <select name="general-status" class="form-select">
+      <option value="" checked>Selecione um status</option>
+      <option value="1">Eleito</option>
+      <option value="0">Não eleito</option>
+    </select>
+    <div id="select-candidate-container" width="100%">
+      <select type="text" id="select-candidate" class="form-select">
+        <option value="">Selecione um candidato</option>
       </select>
     </div>
-    <div id="select-candidate-container">
-      <label>Selecione um candidato:
-        <select type="text" id="select-candidate">
-          <option value="">Selecione um candidato</option>
-        </select>
-      </label>
-    </div>
     <div id="select-role-container">
-      <label>Selecione um cargo:
-        <select type="text" id="select-role">
-          <option value="">Selecione um cargo</option>
-        </select>
-      </label>
+      <select type="text" id="select-role" class="form-select" class="form-select">
+        <option value="">Selecione um cargo</option>
+      </select>
+
     </div>
     <div id="select-city-container">
-      <label>Selecione um município:
-        <select type="text" id="select-city">
-          <option value="">Selecione um município</option>
-        </select>
-      </label>
+      <select type="text" id="select-city" class="form-select" class="form-select">
+        <option value="">Selecione um município</option>
+      </select>
+
     </div>
-    <h2 class="text-center">Resultados</h1>
-    <div id="candidate-container" class="row"></div>
+    <h2 class="text-center results">Resultados</h1>
+      <div id="candidate-container" class="row"></div>
   </div>
   <script src="./js/index.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+    crossorigin="anonymous"></script>
 </body>
+
 </html>
