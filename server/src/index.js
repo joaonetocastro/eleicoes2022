@@ -4,7 +4,7 @@ const { getByCities, getCitiesList } = require('./controllers/cities');
 const { getByRoles, getRolesList } = require('./controllers/roles');
 
 const server = express();
-server.use(express.static('../client'))
+server.use(express.static('../../client'));
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 
