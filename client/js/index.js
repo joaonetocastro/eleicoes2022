@@ -68,9 +68,11 @@ function renderFilterOptions(){
   }
 }
 
-function renderResult(candidates) {
+function renderResult(result) {
+  const { data } = result;
   const container = document.querySelector('#candidate-container');
-  for(const candidate of candidates) {
+
+  for(const candidate of data) {
     const element = document.createElement('div');
     element.classList.add('col-md-3');
     element.innerHTML = `
@@ -88,10 +90,11 @@ function renderResult(candidates) {
   }
 }
 
-function renderCandidateOptions(candidates) {
+function renderCandidateOptions(result) {
+  const { data } = result;
   const container = document.querySelector('#select-candidate');
 
-  for(const candidate of candidates) {
+  for(const candidate of data) {
     const element = document.createElement('option');
     element.value = candidate.cand_nome;
     element.innerHTML = `${candidate.cand_nome}`;
@@ -128,7 +131,7 @@ function loadAndRenderResult() {
   document.querySelector('#candidate-container').replaceChildren();
   const groupBy = getResultBy();
   
-  if(groupBy === 'candidate'){
+  if (groupBy === 'candidate'){
     const selected = getSelectedCandidate();
     if(!selected) return;
     api.getCandidates(renderResult, {
