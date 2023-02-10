@@ -20,7 +20,9 @@ const getByCandidates = (req, res) => {
         }
       });
 
-      res.send(data);
+      res.send({
+        data
+      });
     });
   });
 }

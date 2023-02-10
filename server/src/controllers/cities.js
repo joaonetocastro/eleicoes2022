@@ -27,7 +27,9 @@ const getByCities = (req, res) => {
         return;
       }
 
+      let totalVotes = 0;
       const data = rows.map((row) => {
+        totalVotes += row.cand_votos;
         // os campos estão trocados - cand_status, cargo_nome
         return {
           ...row,
@@ -36,7 +38,10 @@ const getByCities = (req, res) => {
         }
       });
 
-      res.send(data);
+      res.send({
+        data,
+        totalVotes
+      });
     });
   });
 }
