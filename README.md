@@ -8,7 +8,7 @@ Para iniciar a aplicação, siga os seguintes passos:
 
 1. Abra a pasta server
 2. Execute o comando `npm install` para instalar as dependências do projeto
-3. Depois, execute o comando `npm run dev` para iniciar o servidor
+3. Depois, execute o comando `npm run start` para iniciar o servidor
 
 Obs: é necessário ter o [Node.js](https://nodejs.org/en/download/) e o [npm](https://www.npmjs.com/get-npm) instalados em sua máquina.
 
